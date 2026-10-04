@@ -1,0 +1,13 @@
+{
+    "PortfolioDetail": {
+        "Id": "port-oh3djasxegn4u",
+        "ARN": "arn:aws:catalog:us-east-1:123456789012:portfolio/port-oh3djasxegn4u",
+        "DisplayName": "Development-Portfolio",
+        "Description": "Approved resources for developers",
+        "CreatedTime": "2026-10-03T16:13:41.587000+00:00",
+        "ProviderName": "meghana"
+    },
+    "Tags": [],
+    "TagOptions": [],
+    "Budgets": []
+}
