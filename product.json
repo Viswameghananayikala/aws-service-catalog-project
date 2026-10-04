@@ -1,0 +1,29 @@
+{
+    "ProductViewDetail": {
+        "ProductViewSummary": {
+            "Id": "prodview-jezv2afk3y67q",
+            "ProductId": "prod-f2lfohpf5lgqc",
+            "Name": "EC2 Development Server",
+            "Owner": "meghana",
+            "ShortDescription": "Approved EC2 server for developers",
+            "Type": "CLOUD_FORMATION_TEMPLATE",
+            "HasDefaultPath": false
+        },
+        "Status": "CREATED",
+        "ProductARN": "arn:aws:catalog:us-east-1:562319116514:product/prod-f2lfohpf5lgqc",
+        "CreatedTime": "2026-10-03T16:18:20+00:00"
+    },
+    "ProvisioningArtifactSummaries": [
+        {
+            "Id": "pa-2w2hffzmvqeyi",
+            "Name": "v1",
+            "CreatedTime": "2026-10-03T16:18:20+00:00",
+            "ProvisioningArtifactMetadata": {
+                "SourceProvisioningArtifactId": "pa-2w2hffzmvqeyi"
+            }
+        }
+    ],
+    "Tags": [],
+    "TagOptions": [],
+    "Budgets": []
+}
