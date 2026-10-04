@@ -35,3 +35,9 @@ Administrator -> Product -> Portfolio -> Constraint + Access -> User launches ->
 
 ## Result
 The user launched an approved EC2 server without administrator help, and it followed the approved configuration.
+## Repository files
+- ec2-dev-server.yaml : CloudFormation template used by the product
+- servicecatalog-project.yaml : portfolio, product, constraint and access as code
+- portfolio.json, product.json, constraints.json, access.json, provisioned-product.json : configuration exported from AWS
+- Screenshots : proof of each step
+- AWSProj_ppt1.pptx : project presentation
