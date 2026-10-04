@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Approved EC2 Development Server
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t3.micro
+    AllowedValues:
+      - t2.micro
+      - t3.micro
+    Description: Choose an approved instance size
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64
+
+Resources:
+  DevServer:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: !Ref InstanceType
+      ImageId: !Ref LatestAmiId
+      Tags:
+        - Key: Name
+          Value: DevServer-ServiceCatalog
+
+Outputs:
+  InstanceId:
+    Description: ID of the created server
+    Value: !Ref DevServer
+  PublicIP:
+    Description: Public IP of the server
+    Value: !GetAtt DevServer.PublicIp
