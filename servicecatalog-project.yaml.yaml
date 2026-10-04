@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  AWS Service Catalog for Self-Service Provisioning.
+  Defines the portfolio, the EC2 Development Server product, the product-to-portfolio
+  association, the launch constraint (LabRole) and the portfolio access.
+
+Parameters:
+  TemplateUrl:
+    Type: String
+    Description: URL of the product template (ec2-dev-server.yaml). Service Catalog normally loads this from an S3 bucket.
+    Default: https://raw.githubusercontent.com/Viswameghananayikala/aws-service-catalog-project/main/ec2-dev-server.yaml
+  LaunchRoleName:
+    Type: String
+    Default: LabRole
+    Description: IAM role Service Catalog uses to launch the product
+
+Resources:
+
+  # 1. Portfolio: a collection of approved products
+  DevelopmentPortfolio:
+    Type: AWS::ServiceCatalog::Portfolio
+    Properties:
+      DisplayName: Development-Portfolio
+      Description: Approved resources for developers
+      ProviderName: meghana
+
+  # 2. Product: the approved EC2 server, built from a CloudFormation template
+  Ec2DevServerProduct:
+    Type: AWS::ServiceCatalog::CloudFormationProduct
+    Properties:
+      Name: EC2 Development Server
+      Description: Approved EC2 server for developers
+      Owner: meghana
+      ProvisioningArtifactParameters:
+        - Name: v1
+          Description: Version 1
+          Info:
+            LoadTemplateFromURL: !Ref TemplateUrl
+
+  # 3. Add the product to the portfolio
+  ProductPortfolioAssociation:
+    Type: AWS::ServiceCatalog::PortfolioProductAssociation
+    Properties:
+      PortfolioId: !Ref DevelopmentPortfolio
+      ProductId: !Ref Ec2DevServerProduct
+
+  # 4. Launch constraint: the product launches using LabRole
+  LaunchConstraint:
+    Type: AWS::ServiceCatalog::LaunchRoleConstraint
+    DependsOn: ProductPortfolioAssociation
+    Properties:
+      PortfolioId: !Ref DevelopmentPortfolio
+      ProductId: !Ref Ec2DevServerProduct
+      LocalRoleName: !Ref LaunchRoleName
+      Description: Launch as local role LabRole
+
+  # 5. Access: LabRole can see and launch the products in the portfolio
+  PortfolioAccess:
+    Type: AWS::ServiceCatalog::PortfolioPrincipalAssociation
+    Properties:
+      PortfolioId: !Ref DevelopmentPortfolio
+      PrincipalARN: !Sub arn:aws:iam::${AWS::AccountId}:role/${LaunchRoleName}
+      PrincipalType: IAM
+
+Outputs:
+  PortfolioId:
+    Description: ID of the portfolio
+    Value: !Ref DevelopmentPortfolio
+  ProductId:
+    Description: ID of the product
+    Value: !Ref Ec2DevServerProduct
